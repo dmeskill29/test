@@ -1,17 +1,22 @@
-// models/User.js
-import {connectToDatabase} from '../utils/database.js';
+import { Schema, model, models } from "mongoose";
 
-const createUserTable = async () => {
-  const query = `
-    CREATE TABLE IF NOT EXISTS users (
-      id SERIAL PRIMARY KEY,
-      email VARCHAR(255) UNIQUE NOT NULL,
-      username VARCHAR(255) UNIQUE NOT NULL,
-      image TEXT
-    );
-  `;
+const userSchema = new Schema({
+  email: {
+    type: String,
+    required: [true, "Email is required!" ],
+    unique: [true , "Email is already registered!"],
+  },
+  username: {
+    type: String,
+    required: [true, "Username is required!"],
+    unique: [true, "Username is already taken!"],
+    // match: [/^[a-zA-Z0-9]+$/, "Username is invalid!"],
+  },
+  image: {
+    type: String
+  },
+});
 
-  await connectToDatabase.query(query);
-};
+const User = models.User || model("User", userSchema);
 
-export default createUserTable;
+export default User;
