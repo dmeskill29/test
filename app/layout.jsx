@@ -1,6 +1,8 @@
 import '@styles/globals.css'
 import Nav from '@components/Nav'
-import Provider from '@components/Provider'
+// import Provider from '@components/Provider'
+import { ClerkProvider } from '@clerk/nextjs'
+
 
 export const metadata = {
   title: 'SolveSuite',
@@ -9,9 +11,10 @@ export const metadata = {
 
 const Rootlayout = ({children}) => {
   return (
+    <ClerkProvider>
     <html lang='en'> 
       <body>
-        <Provider>
+        {/* <Provider> */}
         <div className='main'>
           <div className='gradient'/>
         </div>
@@ -20,9 +23,10 @@ const Rootlayout = ({children}) => {
           <Nav />
           {children} 
         </main>
-        </Provider>
+        {/* </Provider> */}
       </body>
     </html>
+    </ClerkProvider>
   )
 }
 

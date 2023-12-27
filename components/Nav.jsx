@@ -1,22 +1,27 @@
 "use client";
 
+import { UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import { signIn, signOut, useSession, getProviders } from "@node_modules/next-auth/react";
+// import { useState, useEffect } from "react";
+// import { signIn, signOut, useSession, getProviders } from "@node_modules/next-auth/react";
 
 const Nav = () => {
-const {data: session} = useSession();
-const [providers, setProviders] = useState(null);
-const [toggleDropdown, setToggleDropdown] = useState(false);
+// const {data: session} = useSession();
+// const [providers, setProviders] = useState(null);
+// const [toggleDropdown, setToggleDropdown] = useState(false);
 
-useEffect(() => {
-  const setUpProviders = async () => {
-    const response = await getProviders();
-    setProviders(response);
-  }
-  setUpProviders();
-}, []);
+const { user } = useUser();
+// console.log(userId); 
+
+
+// useEffect(() => {
+//   const setUpProviders = async () => {
+//     const response = await getProviders();
+//     setProviders(response);
+//   }
+//   setUpProviders();
+// }, []);
 
   return (
     <nav className='flex-between w-full mb-16 pt-3'>
@@ -28,10 +33,26 @@ useEffect(() => {
         />
         <p className="logo_text">SolveSuite</p>
         </Link>
-        
-{/* Desktop Navigation */}
+
+        <div className="flex gap-3 md:gap-5">
+          {!user && (
+            <>
+            <Link href="/sign-in" className="outline_btn">Sign In</Link>
+            <Link href="/sign-up" className="outline_btn">Sign Up</Link>
+            </>
+          )}
+          <div className="flex gap-3 md:gap-5">
+            <UserButton afterSignOutUrl='/' />
+          </div>
+        </div>
+
+        </nav>    )
+} 
+
+export default Nav
+{/* Desktop Navigation
 <div className="sm:flex hidden">
-{session?.user ? (<div className="flex gap-3 md:gap-5"> 
+ (<div className="flex gap-3 md:gap-5"> 
 <Link href="/create-prompt" className="black_btn">Create Post</Link> 
 <button type="button" onClick={signOut} className="outline_btn">
   Sign Out
@@ -42,16 +63,14 @@ useEffect(() => {
 </div>): (<> 
 {providers && Object.values(providers).map((provider) => (
   <div key={provider.name}>
-    <button type="button" key={provider.name} onClick={() => signIn(provider.id)} className="black_btn">
-      Sign in with {provider.name}
-    </button>
+    <UserButton afterSignOutUrl="/"/>
   </div>
 ))}
-</>)}
-</div>
+</>)
+</div> */}
 
 {/* Mobile Navigation */}
-<div className="sm:hidden flex relative">
+{/* <div className="sm:hidden flex relative">
 {session?.user ? (
   <div className="flex">
     <Image
@@ -94,9 +113,4 @@ useEffect(() => {
     </>)}
 
 </div>
-
-
-    </nav>    )
-}
-
-export default Nav
+*/}
