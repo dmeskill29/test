@@ -14,7 +14,6 @@ const Rootlayout = ({children}) => {
     <ClerkProvider>
     <html lang='en'> 
       <body>
-        {/* <Provider> */}
         <div className='main'>
           <div className='gradient'/>
         </div>
@@ -23,7 +22,6 @@ const Rootlayout = ({children}) => {
           <Nav />
           {children} 
         </main>
-        {/* </Provider> */}
       </body>
     </html>
     </ClerkProvider>

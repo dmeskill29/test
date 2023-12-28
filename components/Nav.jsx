@@ -1,27 +1,13 @@
 "use client";
 
-import { UserButton, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import Image from "next/image";
-// import { useState, useEffect } from "react";
-// import { signIn, signOut, useSession, getProviders } from "@node_modules/next-auth/react";
+
 
 const Nav = () => {
-// const {data: session} = useSession();
-// const [providers, setProviders] = useState(null);
-// const [toggleDropdown, setToggleDropdown] = useState(false);
 
 const { user } = useUser();
-// console.log(userId); 
-
-
-// useEffect(() => {
-//   const setUpProviders = async () => {
-//     const response = await getProviders();
-//     setProviders(response);
-//   }
-//   setUpProviders();
-// }, []);
 
   return (
     <nav className='flex-between w-full mb-16 pt-3'>
@@ -33,7 +19,7 @@ const { user } = useUser();
         />
         <p className="logo_text">SolveSuite</p>
         </Link>
-
+        
         <div className="flex gap-3 md:gap-5">
           {!user && (
             <>
@@ -41,9 +27,12 @@ const { user } = useUser();
             <Link href="/sign-up" className="outline_btn">Sign Up</Link>
             </>
           )}
-          <div className="flex gap-3 md:gap-5">
-            <UserButton afterSignOutUrl='/' />
-          </div>
+          {user && (
+          <>
+          <Link href="/profile" className="outline_btn">
+            Profile
+          </Link>
+            </>)}
         </div>
 
         </nav>    )
